@@ -1,0 +1,32 @@
+<%- include ('partials/navbar.ejs') %>
+<%- include ('partials/header.ejs') %>
+
+<h1 class="pedidos">Pedidos realizados: </h1>
+<br>
+    <table>
+      <thead>
+          <tr>
+              <th></th>
+              <th>Nº Pedido:</th>
+              <th>Nome do Cliente:</th>
+              <th>Produto:</th>
+              <th>Preço do Produto:</th>
+              <th>Categoria do Produto:</th>
+              <th>CPF do Cliente:</th>
+          </tr>
+      </thead>
+      <tbody>
+        <% pedidos.forEach((pedidos) => { %>
+          <tr>
+              <td><img src="<%= pedidos.foto %>" width="100px"></td>
+              <td><%= pedidos.numero%></td>
+              <td><%= pedidos.nome%></td>
+              <td><%= pedidos.produto%></td>
+              <td><%= pedidos.preco%></td>
+              <td><%= pedidos.categoria%></td>
+              <td><%= pedidos.cpf%></td>   
+          </tr>
+          <%})%>
+  </tbody>
+</table>
+<%- include ('partials/footer.ejs') %>  
