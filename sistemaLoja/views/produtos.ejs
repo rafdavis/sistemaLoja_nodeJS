@@ -1,26 +1,58 @@
 <%- include ('partials/navbar.ejs') %>
 <%- include ('partials/header.ejs') %>
 
-    <h1>Confira nossos produtos:</h1>
-    <br>
-    <table>
-      <thead>
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h1>Cadastro Produto</h1>
+    </div>
+    <div class="card-body">
+      <form method="POST" action="/produtos/new">
+        <label>Nome do Produto:</label>
+        <input type="text" name="nome" id="nome" placeholder="Insira o nome" class="form-control" required>
+
+        <label>Preço do Produto:</label>
+        <input type="text" name="preco" id="preco" placeholder="Insira o preço" class="form-control" required>
+
+        <label>Categoria do Produto:</label>
+        <input type="text" name="categoria" id="categoria" placeholder="Insira a categoria" class="form-control" required>
+        <br>
+        <button class="btn btn-success">Cadastrar</button>
+      </form>
+    </div>
+  </div>
+</div>
+<br>
+
+<div class="container">
+  <div class="card">
+    <div class="card-header">
+      <h1>Produtos</h1>
+    </div>
+    <div class="card-body">
+      <table>
+        <thead>
           <tr>
-              <th></th>
-              <th>Produto:</th>
-              <th>Preço:</th>
-              <th>Categoria:</th>
+            <th>Produto</th>
+            <th>Preço</th>
+            <th>Categoria</th>
+            <th style="text-align: center;" colspan="2">Ações:</th>
           </tr>
-      </thead>
-      <tbody>
-        <% produto.forEach((produto) => { %>
-          <tr>
-              <td><img src="<%= produto.foto %>" width="175px"></td>
+        </thead>
+        <tbody>
+          <% produtos.forEach(produto => { %>
+            <tr>
               <td><%= produto.nome %></td>
               <td><%= produto.preco %></td>
               <td><%= produto.categoria %></td>
-          </tr>
-          <%})%>
-  </tbody>
-</table>
+              <td><a style="color: orange;" href="/produtos/edit/<%= produto.id %>">Editar</a></td>
+              <td><a style="color: red;" href="/produtos/delete/<%= produto.id %>">Excluir</a></td>
+            </tr>
+         <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
 <%- include ('partials/footer.ejs') %>
