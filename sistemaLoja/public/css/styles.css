@@ -9,13 +9,6 @@ body{
 .card-header{
   color: #ffffff;
   background-color: #1480C1;
-  border-color: #161616;
-  border-style: inset;
-}
-.card-body{
-  border-width: 3px;
-  border-color: #161616;
-  border-style: inset;
 }
 
 th, td{

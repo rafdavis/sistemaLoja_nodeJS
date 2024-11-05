@@ -1,9 +1,10 @@
 import express from 'express'
 import Produto from '../models/Produto.js'
+import Auth from '../middleware/Auth.js'
 const router = express.Router()
 
 // ROTA DE PRODUTOS
-router.get("/produtos", (req, res) => {
+router.get("/produtos", Auth,(req, res) => {
     Produto.findAll()
     .then(produtos => {
       res.render('produtos', {
@@ -16,7 +17,7 @@ router.get("/produtos", (req, res) => {
 
 // ROTA DE CADASTRO DE PRODUTOS
 
-router.post('/produtos/new', (req,res) => {
+router.post('/produtos/new', Auth,(req,res) => {
   const nome = req.body.nome
   const preco = req.body.preco
   const categoria = req.body.categoria
@@ -33,7 +34,7 @@ router.post('/produtos/new', (req,res) => {
 
 // ROTA DE EXCLUSÃO DE PRODUTOS
 
-router.get('/produtos/delete/:id', (req,res) => {
+router.get('/produtos/delete/:id', Auth,(req,res) => {
   const id = req.params.id
   Produto.destroy({
     where:{
@@ -47,7 +48,7 @@ router.get('/produtos/delete/:id', (req,res) => {
 })
 
 // ROTA DE EDIÇÃO DE PRODUTOS
-router.get('/produtos/edit/:id', (req,res) => {
+router.get('/produtos/edit/:id', Auth,(req,res) => {
   const id = req.params.id
   Produto.findByPk(id)
   .then((produto) => {
@@ -60,7 +61,7 @@ router.get('/produtos/edit/:id', (req,res) => {
 })
 
 // ROTA DE ALTERAÇÃO DE PRODUTOS
-router.post('/produtos/update/:id', (req,res) => {
+router.post('/produtos/update/:id', Auth,(req,res) => {
   const id = req.body.id
   const nome = req.body.nome
   const preco = req.body.preco

@@ -1,9 +1,10 @@
 import express from 'express'
-import Pedido from '../models/Pedido.js'
 const router = express.Router()
+import Pedido from '../models/Pedido.js'
+import Auth from '../middleware/Auth.js'
 
 // ROTA PEDIDOS
-router.get("/pedidos", (req, res) => {
+router.get("/pedidos", Auth,(req, res) => {
     Pedido.findAll()
     .then(pedidos => {
       res.render('pedidos', {
@@ -16,7 +17,7 @@ router.get("/pedidos", (req, res) => {
 
 // ROTA DE CADASTRO DO PEDIDO
 
-router.post('/pedidos/new', (req,res) => {
+router.post('/pedidos/new', Auth,(req,res) => {
   const numero = req.body.numero
   const valor = req.body.valor
   Pedido.create({
@@ -31,7 +32,7 @@ router.post('/pedidos/new', (req,res) => {
 
 // ROTA DE EXCLUSÃO DE PEDIDOS
 
-router.get('/pedidos/delete/:id', (req,res) => {
+router.get('/pedidos/delete/:id', Auth,(req,res) => {
   const id = req.params.id
   Pedido.destroy({
     where:{
@@ -45,7 +46,7 @@ router.get('/pedidos/delete/:id', (req,res) => {
 })
 
 // ROTA DE EDIÇÃO DE PEDIDOS
-router.get('/pedidos/edit/:id', (req,res) => {
+router.get('/pedidos/edit/:id', Auth,(req,res) => {
   const id = req.params.id
   Pedido.findByPk(id)
   .then((pedido) => {
@@ -59,7 +60,7 @@ router.get('/pedidos/edit/:id', (req,res) => {
 
 // ROTA DE ALTERAÇÃO DE PEDIDOS
 
-router.post('/pedidos/update/:id', (req,res) => {
+router.post('/pedidos/update/:id', Auth,(req,res) => {
   const id = req.body.id
   const numero = req.body.numero
   const valor = req.body.valor

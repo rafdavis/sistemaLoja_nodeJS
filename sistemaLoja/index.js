@@ -1,6 +1,20 @@
 import express from "express"
 const app = express();
 import connection from "./config/sequelize-config.js"
+import session from 'express-session'
+
+app.use(session({
+  secret: 'lojasecret', 
+  cookie: {maxAge: 3600000},
+  saveUninitialized: false,
+  resave: false
+}))
+
+import Auth from './middleware/Auth.js'
+
+import flash from "express-flash"
+
+app.use(flash())
 
 connection.authenticate()
 .then(() => {
@@ -23,19 +37,24 @@ connection.query('CREATE DATABASE IF NOT EXISTS loja;')
 import ClientesController from "./controllers/ClientesController.js"
 import PedidosController from "./controllers/PedidosController.js"
 import ProdutosController from "./controllers/ProdutosController.js"
+import UsersController from './controllers/UsersController.js'
 
 app.use("/", ClientesController)
 app.use("/", PedidosController)
 app.use("/", ProdutosController)
+app.use("/", UsersController)
 
 app.set("view engine", "ejs");
 
 app.use(express.static('public'))
 
 // CRIANDO A ROTA PRINCIPAL
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", Auth,(req, res) => {
+  res.render("index", {
+    messages: req.flash()
+  });
 });
+
 
 // Iniciando o servidor na porta 8080
 const port = 8080;
